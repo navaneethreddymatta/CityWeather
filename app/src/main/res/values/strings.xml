@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">CityWeather</string>
+    <string name="app_name">Weather App</string>
+    <string name="app_name_city_detail">City Weather</string>
+    <string name="app_name_preference">Preferences</string>
+    <string name="hint_city">City</string>
+    <string name="hint_country">Country</string>
+    <string name="submit_button">Search</string>
+    <string name="hint_noFavList">There are no cities to display. Search the city from the search box and save.</string>
+    <string name="fav_title">Saved Cities</string>
+    <string name="noConnection">No Internet Connection </string>
+    <string name="toast_noCityName">Enter valid City name</string>
+    <string name="toast_noCountryName">Enter valid Country name</string>
+    <string name="toast_noRecordFound">No cities match your query</string>
+    <string name="toast_recordDeleted">City Deleted</string>
 </resources>
