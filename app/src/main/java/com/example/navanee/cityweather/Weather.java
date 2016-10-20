@@ -10,15 +10,16 @@ public class Weather {
     private String city;
     private String country;
     private Date timeStamp;
-    private float temperature;
+    private Double temperature;
     private int humidity;
-    private int pressure;
+    private Double pressure;
     private String condition;
-    private int windSpeed;
+    private Double windSpeed;
     private String windDir;
     private String windAngle;
 
-    public Weather(String city, String country, Date timeStamp, float temperature, int humidity, int pressure, String condition, int windSpeed, String windDir, String windAngle) {
+
+   /* public Weather(String city, String country, Date timeStamp, float temperature, int humidity, int pressure, String condition, int windSpeed, String windDir, String windAngle) {
         this.city = city;
         this.country = country;
         this.timeStamp = timeStamp;
@@ -29,7 +30,7 @@ public class Weather {
         this.windSpeed = windSpeed;
         this.windDir = windDir;
         this.windAngle = windAngle;
-    }
+    }*/
 
     public String getCity() {
         return city;
@@ -55,11 +56,11 @@ public class Weather {
         this.timeStamp = timeStamp;
     }
 
-    public float getTemperature() {
+    public Double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(float temperature) {
+    public void setTemperature(Double temperature) {
         this.temperature = temperature;
     }
 
@@ -71,11 +72,11 @@ public class Weather {
         this.humidity = humidity;
     }
 
-    public int getPressure() {
+    public Double getPressure() {
         return pressure;
     }
 
-    public void setPressure(int pressure) {
+    public void setPressure(Double pressure) {
         this.pressure = pressure;
     }
 
@@ -87,11 +88,11 @@ public class Weather {
         this.condition = condition;
     }
 
-    public int getWindSpeed() {
+    public Double getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(int windSpeed) {
+    public void setWindSpeed(Double windSpeed) {
         this.windSpeed = windSpeed;
     }
 
