@@ -17,7 +17,15 @@ public class Weather {
     private Double windSpeed;
     private String windDir;
     private String windAngle;
+    private String icon_url;
 
+    public String getIcon_url() {
+        return icon_url;
+    }
+
+    public void setIcon_url(String icon_url) {
+        this.icon_url = icon_url;
+    }
 
    /* public Weather(String city, String country, Date timeStamp, float temperature, int humidity, int pressure, String condition, int windSpeed, String windDir, String windAngle) {
         this.city = city;

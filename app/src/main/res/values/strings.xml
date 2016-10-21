@@ -12,4 +12,21 @@
     <string name="toast_noCountryName">Enter valid Country name</string>
     <string name="toast_noRecordFound">No cities match your query</string>
     <string name="toast_recordDeleted">City Deleted</string>
+    <string name="det_temp">Temperature: </string>
+    <string name="det_condition">Condition: </string>
+    <string name="det_pressure">Pressure: </string>
+    <string name="det_humidity">Humidity: </string>
+    <string name="det_wind">Wind: </string>
+    <string-array name="temp_list">
+        <item name ="1">"\u2103"</item>
+        <item name = "2">"\u2109"</item>
+    </string-array>
+    <string-array name="temp_values">
+        <item name="1">c</item>
+        <item name="2">f</item>
+    </string-array>
+    <string name="pref_title">Select Temperature Unit</string>
+    <string name="pref_summary">Choose between Celsius and Fahrenheit</string>
+    <string name="progress_message">Loading Data</string>
+    <string name="error_message">No Cities match your search query</string>
 </resources>

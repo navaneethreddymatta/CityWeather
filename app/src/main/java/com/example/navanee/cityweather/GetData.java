@@ -63,6 +63,7 @@ public class GetData extends AsyncTask<String, Void, ArrayList<Weather>> {
         if(weathers.size() > 0) {
             Double avgTemp = 0.0, temp = 0.0;
             Date tempDt = null;
+            String iconUrl = "";
             int j = 0;
             Weather tempWeather;
             for (int i = 0; i < weathers.size(); i++) {
@@ -72,6 +73,7 @@ public class GetData extends AsyncTask<String, Void, ArrayList<Weather>> {
                     tempDt = curDate;
                     tempWeather = curWeather;
                     temp = temp + curWeather.getTemperature();
+                    iconUrl = curWeather.getIcon_url();
                     j++;
                 } else {
                     avgTemp = temp / j;
@@ -80,8 +82,10 @@ public class GetData extends AsyncTask<String, Void, ArrayList<Weather>> {
                     summaryWeatherObj.setCountry(country);
                     summaryWeatherObj.setTimeStamp(tempDt);
                     summaryWeatherObj.setTemperature(avgTemp);
+                    summaryWeatherObj.setIcon_url(iconUrl);
                     summaryList.add(summaryWeatherObj);
                     avgTemp = 0.0;
+                    iconUrl = "";
                     tempDt = curDate;
                     tempWeather = curWeather;
                     temp = curWeather.getTemperature();

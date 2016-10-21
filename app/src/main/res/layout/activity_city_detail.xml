@@ -11,7 +11,9 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:id="@+id/detailLayout"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="match_parent"
@@ -47,5 +49,43 @@
             android:layout_height="match_parent"
             android:id="@+id/detailRecycleView"
             android:layout_below="@+id/det_sub_title"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:background="?attr/colorControlHighlight"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:id="@+id/loadingLayout">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar3"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:minHeight="40dp"
+            android:minWidth="40dp" />
+
+        <TextView
+            android:text="@string/progress_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView9"
+            android:layout_alignTop="@+id/progressBar3"
+            android:layout_toRightOf="@+id/progressBar3"
+            android:layout_toEndOf="@+id/progressBar3"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
+            android:gravity="center_vertical"
+            android:height="50dp"
+            android:textSize="18sp" />
+
     </RelativeLayout>
 </RelativeLayout>

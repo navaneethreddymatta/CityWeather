@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorControlHighlight"
+    android:id="@+id/landingCell">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="100dp"
+        android:gravity="center_vertical"
+        android:padding="5dp"
+        android:layout_width="160dp"
+        android:id="@+id/landingCell1">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/favCityName"
+            android:gravity="center_vertical"
+            android:textStyle="normal|bold"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:id="@+id/landingCell2">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/favCityTemp"
+            android:textAlignment="textEnd"
+            android:textStyle="normal|bold"
+            android:textSize="24sp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical|center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/favCityDate"
+            android:textAlignment="textEnd"
+            android:layout_gravity="end" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="100dp">
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/star_gray"
+            android:id="@+id/makeFavBtn"
+            android:paddingTop="20dp" />
+    </LinearLayout>
+
+</LinearLayout>

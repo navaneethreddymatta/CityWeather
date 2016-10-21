@@ -6,6 +6,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,17 +24,21 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, FavCityAdapter.ConnectFavourites {
 
     TextView cityName, countryName;
     ListView favListView;
     Button submitButton;
-    SharedPreferences pref;
     SharedPreferences.Editor editor;
     String favCitiesStr;
     Gson gson = new Gson();
     LinearLayout favListLayout, noFavListLayout;
     List<FavouriteCity> favList;
+    SharedPreferences preferences;
+    PreferenceChangeListener pListener = null;
+    DatabaseDataManager dm;
+    RecyclerView favCitiesView;
+    RecyclerView.LayoutManager dLayoutManager;
 
     static String PREF_NAME = "favCities";
     static String PREF_KEY_NAME = "favCitiesList";
@@ -41,13 +49,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setAllViews();
+        dm = new DatabaseDataManager(this);
         if(isNetworkConnected()){
             submitButton.setOnClickListener(this);
-            showFavTableUI();
         } else {
             Toast.makeText(this, R.string.noConnection, Toast.LENGTH_LONG).show();
             return;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadUI();
     }
 
     public void setAllViews() {
@@ -82,62 +96,68 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void showFavTableUI() {
-        pref = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
-        editor = pref.edit();
-        favCitiesStr = pref.getString(PREF_KEY_NAME,null);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.settings) {
+            Intent intent = new Intent(this, UserPreferenceActivity.class);
+            startActivity(intent);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu1,menu);
+        return true;
+    }
+
+    @Override
+    public void setSelectedRow() {
+        loadUI();
+    }
+
+    private class PreferenceChangeListener implements SharedPreferences.OnSharedPreferenceChangeListener{
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            Toast.makeText(MainActivity.this, "Preferences changed", Toast.LENGTH_LONG);
+        }
+    }
+
+    public void loadUI() {
+        favList =  dm.getAllCities();
+        sortCities(favList);
+        preferences = getSharedPreferences(PREF_NAME,MODE_PRIVATE);
+        editor = preferences.edit();
+        favCitiesStr = preferences.getString(PREF_KEY_NAME,null);
         if(favCitiesStr == null) {
             favCitiesStr = "[]";
             editor.putString(PREF_KEY_NAME,favCitiesStr);
             editor.commit();
         }
-        favList = new Gson().fromJson(favCitiesStr,type);
-        if(favList.size() > 0) {
-            noFavListLayout.setVisibility(View.GONE);
-            //favListLayout.setVisibility(View.VISIBLE);
-            /*FavouritesAdapter favAdapter = new FavouritesAdapter(this,R.layout.favourites_row_layout,favList);
-            favListView.setAdapter(favAdapter);
-            favAdapter.setNotifyOnChange(true);
-            favListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent = new Intent(MainActivity.this,CityDetail.class);
-                    intent.putExtra("city",favList.get(position).getCity());
-                    intent.putExtra("country",favList.get(position).getCountry());
-                    startActivity(intent);
-                }
-            });
-            favListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-                @Override
-                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    view.setBackgroundColor(Color.CYAN);
-                    favList = gson.fromJson(favCitiesStr, MainActivity.type);
-                    favList.remove(position);
-                    Toast.makeText(MainActivity.this,R.string.toast_recordDeleted,Toast.LENGTH_LONG).show();
-                    favCitiesStr = gson.toJson(favList,type);
-                    editor.putString(PREF_KEY_NAME,favCitiesStr);
-                    editor.commit();
-                    showFavTableUI();
-                    return true;
-                }
-            });*/
+        if(favList.size() == 0) {
+            findViewById(R.id.favListLayout).setVisibility(View.GONE);
+            findViewById(R.id.noFavListLayout).setVisibility(View.VISIBLE);
         } else {
-            favListLayout.setVisibility(View.GONE);
-            //noFavListLayout.setVisibility(View.VISIBLE);
+            favCitiesView = (RecyclerView) findViewById(R.id.fCitiesView);
+            dLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            favCitiesView.setLayoutManager(dLayoutManager);
+            findViewById(R.id.noFavListLayout).setVisibility(View.GONE);
+            findViewById(R.id.favListLayout).setVisibility(View.VISIBLE);
+            FavCityAdapter adapter = new FavCityAdapter(MainActivity.this,favList,MainActivity.this);
+            favCitiesView.setAdapter(adapter);
+            //adapter.notifyDataSetChanged();
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        showFavTableUI();
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.settings) {
-            Intent intent = new Intent(this, PreferenceActivity.class);
-            startActivity(intent);
+    public void sortCities (List<FavouriteCity> list){
+        int index = 0;
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).getFavorite() == 1){
+                FavouriteCity temp = list.get(i);
+                list.remove(i);
+                list.add(index,temp);
+                index++;
+            }
         }
-        return true;
     }
 }

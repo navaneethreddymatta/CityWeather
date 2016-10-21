@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CityDetail" />
-        <activity android:name=".PreferenceActivity"></activity>
+        <activity android:name=".UserPreferenceActivity"></activity>
     </application>
 
 </manifest>

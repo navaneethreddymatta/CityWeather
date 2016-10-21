@@ -1,30 +1,39 @@
 package com.example.navanee.cityweather;
 
-import java.util.Date;
-
 /**
  * Created by navanee on 18-10-2016.
  */
 
 public class FavouriteCity {
-    private String city;
-    private String country;
-    private int temperature;
-    private Date date;
+    private long _id;
+    private String cityName, country;
+    private String temperature;
+    private int favorite;
+    private String date;
+    public FavouriteCity() {
+    }
 
-    public FavouriteCity(Date date, String city, String country, int temperature) {
-        this.date = date;
-        this.city = city;
+    public FavouriteCity(String cityName, String country, String temperature, int favorite) {
+        this.cityName = cityName;
         this.country = country;
         this.temperature = temperature;
+        this.favorite = favorite;
     }
 
-    public String getCity() {
-        return city;
+    public long get_id() {
+        return _id;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void set_id(long _id) {
+        this._id = _id;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public String getCountry() {
@@ -35,19 +44,37 @@ public class FavouriteCity {
         this.country = country;
     }
 
-    public int getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(int temperature) {
-        this.temperature = temperature;
-    }
-
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
+
+    public int getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(int favorite) {
+        this.favorite = favorite;
+    }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "cityName='" + cityName + '\'' +
+                ", country='" + country + '\'' +
+                ", temperature='" + temperature + '\'' +
+                ", favorite=" + favorite +
+                '}';
     }
 }
